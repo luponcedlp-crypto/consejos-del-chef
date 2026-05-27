@@ -1,0 +1,269 @@
+/* ============================================================
+   Oregon Foods · Consejos del Chef — Design Tokens
+   ============================================================
+   Brand: butcher-shop heritage + premium editorial.
+   Green from the official Oregon Foods registered logo.
+   Warm sear accent from parrilla/grill imagery.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
+:root {
+  /* ============ COLORS — Brand ============ */
+  --of-green-900: #0e3320;
+  --of-green-800: #154a2c;
+  --of-green-700: #1e6238;
+  --of-green-500: #3a8a55;
+  --of-green-300: #a7d0b3;
+  --of-green-100: #e3efe5;
+
+  --of-sear-900: #4a1a0d;
+  --of-sear-700: #8a2e15;
+  --of-sear-500: #c14b1f;
+  --of-sear-300: #e8a778;
+  --of-sear-100: #f6e6d6;
+
+  --of-paper:    #f5efe3;
+  --of-paper-2:  #ede4d2;
+  --of-cream:    #faf6ec;
+  --of-white:    #ffffff;
+  --of-ink-900:  #1a1a17;
+  --of-ink-700:  #3a342a;
+  --of-ink-500:  #6b6357;
+  --of-ink-300:  #b8aea0;
+  --of-ink-100:  #e6dfd1;
+
+  /* ============ SEMANTIC ============ */
+  --bg:            var(--of-paper);
+  --bg-elevated:   var(--of-cream);
+  --bg-recessed:   var(--of-paper-2);
+  --surface-photo: var(--of-white);
+
+  --fg:        var(--of-ink-900);
+  --fg-muted:  var(--of-ink-700);
+  --fg-subtle: var(--of-ink-500);
+  --fg-faint:  var(--of-ink-300);
+  --fg-on-dark: var(--of-cream);
+
+  --primary:         var(--of-green-800);
+  --primary-hover:   var(--of-green-700);
+  --primary-pressed: var(--of-green-900);
+  --primary-fg:      var(--of-cream);
+
+  --accent:      var(--of-sear-500);
+  --accent-deep: var(--of-sear-700);
+
+  --border:        var(--of-ink-100);
+  --border-strong: var(--of-ink-300);
+  --border-on-dark: rgba(245, 239, 227, 0.18);
+
+  --tag-bg:      var(--of-green-100);
+  --tag-fg:      var(--of-green-900);
+  --tag-warm-bg: var(--of-sear-100);
+  --tag-warm-fg: var(--of-sear-900);
+
+  /* ============ TYPOGRAPHY ============ */
+  --font-display:   "Big Shoulders Display", "Bebas Neue", "Oswald", system-ui, sans-serif;
+  --font-editorial: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+  --font-ui:        "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --fs-display-xl: clamp(64px, 9vw, 132px);
+  --fs-display-l:  clamp(48px, 6vw, 88px);
+  --fs-display-m:  clamp(36px, 4.5vw, 64px);
+  --fs-h1:         clamp(32px, 3.4vw, 48px);
+  --fs-h2:         28px;
+  --fs-h3:         22px;
+  --fs-h4:         18px;
+  --fs-body-l:     19px;
+  --fs-body:       16px;
+  --fs-body-s:     14px;
+  --fs-caption:    13px;
+  --fs-eyebrow:    12px;
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.18;
+  --lh-normal:  1.45;
+  --lh-relaxed: 1.6;
+
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.08em;
+  --tracking-eyebrow: 0.18em;
+
+  /* ============ SPACING ============ */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* ============ RADII ============ */
+  --r-0:    0;
+  --r-1:    2px;
+  --r-2:    4px;
+  --r-3:    8px;
+  --r-4:    12px;
+  --r-pill: 999px;
+
+  /* ============ SHADOWS — warm-tinted ============ */
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgba(26, 26, 23, 0.06),
+              0 1px 1px rgba(26, 26, 23, 0.04);
+  --shadow-2: 0 4px 12px rgba(26, 26, 23, 0.08),
+              0 2px 4px rgba(26, 26, 23, 0.04);
+  --shadow-3: 0 12px 28px rgba(26, 26, 23, 0.12),
+              0 4px 8px rgba(26, 26, 23, 0.06);
+  --shadow-inset: inset 0 0 0 1px var(--border);
+  --shadow-focus: 0 0 0 3px rgba(30, 98, 56, 0.32);
+
+  /* ============ MOTION ============ */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.of-display-xl,
+.of-display-l,
+.of-display-m {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--of-green-900);
+  text-transform: uppercase;
+}
+.of-display-xl { font-size: var(--fs-display-xl); font-weight: 900; }
+.of-display-l  { font-size: var(--fs-display-l); }
+.of-display-m  { font-size: var(--fs-display-m); }
+
+h1, .of-h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--of-green-900);
+  margin: 0;
+}
+h2, .of-h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin: 0;
+}
+h3, .of-h3 {
+  font-family: var(--font-editorial);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  color: var(--fg);
+  margin: 0;
+}
+h4, .of-h4 {
+  font-family: var(--font-ui);
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  color: var(--fg);
+  margin: 0;
+}
+
+.of-editorial,
+.of-prose {
+  font-family: var(--font-editorial);
+  font-size: var(--fs-body-l);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+.of-editorial p + p,
+.of-prose p + p { margin-top: 1em; }
+
+p, .of-body {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-muted);
+  margin: 0;
+}
+
+.of-eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--of-sear-700);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.of-eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.of-caption {
+  font-family: var(--font-ui);
+  font-size: var(--fs-caption);
+  color: var(--fg-subtle);
+  letter-spacing: 0.01em;
+}
+
+.of-quote {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: var(--lh-snug);
+  color: var(--of-green-900);
+}
+
+a {
+  color: var(--of-green-700);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-1) var(--ease-out);
+}
+a:hover { color: var(--of-green-900); }
+
+code, .of-mono {
+  font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.92em;
+  background: var(--of-paper-2);
+  padding: 2px 6px;
+  border-radius: var(--r-1);
+  color: var(--of-ink-900);
+}
