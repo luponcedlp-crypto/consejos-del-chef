@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consejos del Chef · Oregon Foods</title>
+  <meta name="description" content="Aprende a cocinar los mejores cortes con los consejos de nuestros chefs. Oregon Foods — Excelencia desde el Origen." />
+  <link rel="stylesheet" href="css/kit.css" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+          integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+          integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+          integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+          crossorigin="anonymous"></script>
+  <script src="data.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+
+/* ---- Iconos de cuidado ---- */
+const CARE_ICONS = {
+  fridge: <svg viewBox="0 0 24 24" strokeWidth="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="5" y1="10" x2="19" y2="10"/><line x1="9" y1="6" x2="9" y2="8"/><line x1="9" y1="13" x2="9" y2="17"/></svg>,
+  snow:   <svg viewBox="0 0 24 24" strokeWidth="1.8"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/><line x1="19.1" y1="4.9" x2="4.9" y2="19.1"/></svg>,
+  clock:  <svg viewBox="0 0 24 24" strokeWidth="1.8"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>,
+  salt:   <svg viewBox="0 0 24 24" strokeWidth="1.8"><path d="M7 4h10v6l-2 11H9L7 10z"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>,
+  fire:   <svg viewBox="0 0 24 24" strokeWidth="1.8"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+};
+
+/* ---- SVG helpers ---- */
+const ICO_CLOCK = <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+const ICO_FIRE  = <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>;
+const ICO_BACK  = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>;
+const ICO_X     = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+
+/* ============================================================
+   Nav
+   ============================================================ */
+function Nav({ activeTab, onTabChange, onSearchOpen }) {
+  return (
+    <nav className="cdc-nav">
+      <button className="cdc-nav__brand" onClick={() => onTabChange('inicio')} style={{background:'none',border:'none',cursor:'pointer',textAlign:'left'}}>
+        <span className="cdc-nav__mark">
+          <span style={{display:'inline-flex',alignItems:'center',justifyContent:'center',background:'#fff',borderRadius:'999px',padding:'4px 14px',height:34,fontFamily:'var(--font-display)',fontWeight:900,fontSize:13,letterSpacing:'0.06em',color:'var(--of-green-800)',whiteSpace:'nowrap'}}>OREGON FOODS</span>
+        </span>
+        <span className="cdc-nav__sub">Consejos del Chef</span>
+      </button>
+      <ul className="cdc-nav__links">
+        <li><button onClick={() => onTabChange('inicio')}    className={activeTab === 'inicio'    ? 'active' : ''}>Consejos del Chef</button></li>
+        <li><button onClick={() => onTabChange('recetas')}   className={activeTab === 'recetas'   ? 'active' : ''}>Recetas</button></li>
+        <li><button onClick={() => onTabChange('productos')} className={activeTab === 'productos' ? 'active' : ''}>Productos</button></li>
+        <li><button onClick={() => onTabChange('tiendas')}   className={activeTab === 'tiendas'   ? 'active' : ''}>Tiendas</button></li>
+      </ul>
+      <div className="cdc-nav__cta">
+        <button className="cdc-nav__search" aria-label="Buscar" onClick={onSearchOpen}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+/* ============================================================
+   SearchPanel — busca productos por nombre o categoría
+   ============================================================ */
+const COMP_COLORS = {
+  "Vino Tinto":       "#7B1A2B",
+  "Vino Blanco":      "#7A6010",
+  "Vino Rosado":      "#B04060",
+  "Espumante":        "#908030",
+  "Cerveza":          "#C47820",
+  "Cerveza de Trigo": "#A86010",
+  "Cerveza Stout":    "#2A1A10",
+  "Queso":            "#9A7010",
+  "Salsa":            "#C14B1F",
+  "Marinado":         "#3A6A30",
+  "Sal":              "#5A5850",
+  "Pan":              "#9A6440",
+  "Guarnición":       "#4A7A3A",
+  "Picada":           "#2A5848",
+};
+
+function SearchPanel({ onClose, onSelectProduct }) {
+  const [query, setQuery] = React.useState('');
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => { inputRef.current?.focus(); }, []);
+
+  React.useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  const q = query.trim().toLowerCase();
+  const results = q
+    ? window.PRODUCTS.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        p.cat.toLowerCase().includes(q)
+      )
+    : [];
+
+  return (
+    <>
+      <div className="cdc-search-overlay" onClick={onClose} />
+      <div className="cdc-search-panel">
+        <div className="cdc-search-panel__head">
+          <svg className="cdc-search-panel__ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input
+            ref={inputRef}
+            className="cdc-search-panel__input"
+            type="text"
+            placeholder="Busca el corte que compraste…"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+          />
+          <button className="cdc-search-panel__x" onClick={onClose} aria-label="Cerrar">{ICO_X}</button>
+        </div>
+        <div className="cdc-search-results">
+          {!q && (
+            <p className="cdc-search-hint">Escribe el nombre del producto para ver sus consejos, recetas y maridajes.</p>
+          )}
+          {q && results.length === 0 && (
+            <p className="cdc-search-empty">Sin resultados para "{query}"</p>
+          )}
+          {results.map(p => (
+            <button key={p.id} className="cdc-search-result"
+              onClick={() => { onSelectProduct(p.id); onClose(); }}>
+              <div className="cdc-search-result__photo"
+                style={p.photo ? {backgroundImage:`url('${p.photo}')`} : {}} />
+              <div className="cdc-search-result__body">
+                <div className="cdc-search-result__name">{p.name}</div>
+                <div className="cdc-search-result__cat">{p.cat} · {p.weight}</div>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2.5">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* ============================================================
+   HeroOpener
+   ============================================================ */
+function HeroOpener({ eyebrow, headline, subhead, bgImg }) {
+  const photoStyle = bgImg ? { backgroundImage:`url('${bgImg}')`, backgroundSize:'cover', backgroundPosition:'center top' } : {};
+  return (
+    <section className="cdc-hero">
+      <div className="cdc-hero__photo" style={photoStyle} />
+      <div className="cdc-hero__scrim" />
+      <div className="cdc-hero__copy">
+        <span className="cdc-hero__eyebrow">{eyebrow}</span>
+        <h1 className="cdc-hero__title">{headline}</h1>
+        <p className="cdc-hero__sub">{subhead}</p>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   TipCard
+   ============================================================ */
+function TipCard({ num, category, title, body, author, readMin }) {
+  return (
+    <article className="cdc-tip">
+      <div className="cdc-tip__numeral"><sup>Nº</sup>{num}</div>
+      <div className="cdc-tip__body">
+        <span className="cdc-eyebrow">— Consejo · {category}</span>
+        <h3 className="cdc-tip__title">{title}</h3>
+        <p className="cdc-tip__copy">{body}</p>
+        <div className="cdc-tip__meta">
+          <span>{readMin} min de lectura</span>
+          <span>·</span>
+          <span>{author}</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/* ============================================================
+   RecipeCard
+   ============================================================ */
+function RecipeCard({ title, category, time, level, imgSrc, onClick }) {
+  const photoStyle = imgSrc ? {
+    backgroundImage: `linear-gradient(180deg, transparent 45%, rgba(14,51,32,0.72)), url('${imgSrc}')`,
+    backgroundSize:'cover', backgroundPosition:'center',
+  } : { background:'linear-gradient(135deg, #3a1810, #6a2e15)' };
+
+  return (
+    <article className="cdc-recipe" onClick={onClick} style={onClick ? {cursor:'pointer'} : {}}>
+      <div className="cdc-recipe__photo" style={photoStyle}>
+        <span className="cdc-recipe__cat">{category}</span>
+      </div>
+      <div className="cdc-recipe__body">
+        <h4 className="cdc-recipe__title">{title}</h4>
+        <div className="cdc-recipe__meta">
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> {time}</span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> {level}</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/* ============================================================
+   ProductRail — muestra los 18 productos, clic abre detalle
+   ============================================================ */
+function ProductRail({ title, products, onProductClick }) {
+  return (
+    <section className="cdc-rail" id="productos">
+      <div className="cdc-rail__head">
+        <span className="cdc-eyebrow">— Línea</span>
+        <h2 className="cdc-rail__title">{title}</h2>
+      </div>
+      <div className="cdc-rail__track">
+        {products.map((p) => (
+          <article key={p.id} className="cdc-prod" onClick={() => onProductClick(p.id)}>
+            <div className="cdc-prod__photo" style={{
+              backgroundImage: p.photo ? `url('${p.photo}')` : undefined,
+              backgroundSize:'contain', backgroundPosition:'center',
+              backgroundRepeat:'no-repeat', backgroundColor:'#fff',
+              ...(p.bg && !p.photo ? {background: p.bg} : {})
+            }}>
+            </div>
+            <div className="cdc-prod__body">
+              <span className="cdc-prod__cat">{p.cat}</span>
+              <h4 className="cdc-prod__name">{p.name}</h4>
+              <button className="cdc-prod__btn" onClick={e => { e.stopPropagation(); onProductClick(p.id); }}>
+                Ver detalles →
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   ChefQuote
+   ============================================================ */
+function ChefQuote({ quote, chef, role }) {
+  return (
+    <section className="cdc-quote">
+      <span className="cdc-quote__mark">"</span>
+      <blockquote>{quote}</blockquote>
+      <div className="cdc-quote__cite">
+        <strong>{chef}</strong>
+        <span>{role}</span>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+function Footer() {
+  return (
+    <footer className="cdc-footer">
+      <div className="cdc-footer__top">
+        <div className="cdc-footer__brand">
+          <span style={{display:'inline-flex',alignItems:'center',justifyContent:'center',background:'#fff',borderRadius:'999px',padding:'5px 18px',height:40,fontFamily:'var(--font-display)',fontWeight:900,fontSize:15,letterSpacing:'0.06em',color:'var(--of-green-800)',whiteSpace:'nowrap'}}>OREGON FOODS</span>
+          <p>Excelencia desde el Origen.<br />Desde 2002, la mejor selección de carnes del mundo en el Perú.</p>
+        </div>
+        <div className="cdc-footer__cols">
+          <div><h5>Contenido</h5><ul><li>Consejos</li><li>Recetas</li><li>Técnicas</li><li>Newsletter</li></ul></div>
+          <div><h5>Productos</h5><ul><li>Línea de Carnes</li><li>Línea Tradición</li><li>Línea Selección</li><li>Embutidos</li></ul></div>
+          <div><h5>Tiendas</h5><ul><li>Barranco</li><li>Miraflores</li><li>La Molina</li><li>San Borja</li><li>Surco</li></ul></div>
+          <div><h5>Síguenos</h5><ul><li>Instagram</li><li>Facebook</li><li>TikTok</li><li>YouTube</li></ul></div>
+        </div>
+      </div>
+      <div className="cdc-footer__bottom">
+        <span>© 2024 Oregon Foods S.A.C. · Todos los derechos reservados</span>
+        <span>The Oregon Way</span>
+      </div>
+    </footer>
+  );
+}
+
+/* ============================================================
+   ProductDrawer — detalle de producto con specs, cuidados,
+   platos, recetas y productos complementarios.
+   ============================================================ */
+function ProductDrawer({ productId, onClose, onOpenRecipe, onOpenProduct }) {
+  const products = window.PRODUCTS;
+  const recipes  = window.RECIPES;
+  const chefs    = window.CHEFS;
+  const p = products.find(x => x.id === productId);
+  if (!p) return null;
+
+  const productRecipes = (p.recipes || []).map(rid => recipes[rid]).filter(Boolean);
+
+  return (
+    <>
+      <div className="cdc-overlay" onClick={onClose} />
+      <div className="cdc-drawer" role="dialog" aria-label={p.name}>
+        {/* Barra superior */}
+        <div className="cdc-drawer__bar">
+          <div className="cdc-drawer__bar-info">
+            <div className="l1">Oregon Foods</div>
+            <div className="l2">Detalle de producto</div>
+          </div>
+          <button className="cdc-drawer__x" onClick={onClose} aria-label="Cerrar">{ICO_X}</button>
+        </div>
+
+        {/* Foto del producto */}
+        <div className="cdc-d-photo" style={{
+          backgroundImage: p.photo ? `url('${p.photo}')` : undefined,
+        }} />
+
+        {/* Nombre */}
+        <div className="cdc-d-namebar">
+          <span className="cdc-d-namebar__eye">{p.cat}</span>
+          <h2 className="cdc-d-namebar__name">{p.name}</h2>
+        </div>
+
+        {/* Intro */}
+        <div className="cdc-d-intro">
+          <p className="cdc-d-lede">{p.lede}</p>
+          <p className="cdc-d-body">{p.body}</p>
+        </div>
+
+        {/* Specs */}
+        <div className="cdc-d-specs">
+          {p.specs.map((s, i) => (
+            <div key={i} className="cdc-d-spec">
+              <div className="cdc-d-spec__l">{s.l}</div>
+              <div className="cdc-d-spec__v">{s.v}</div>
+              <div className="cdc-d-spec__s">{s.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Cuidados */}
+        <div className="cdc-d-sec">
+          <span className="cdc-d-sec__eye">Conservación</span>
+          <h3 className="cdc-d-sec__h">Cómo conservarlo en casa</h3>
+          <ul className="cdc-care">
+            {p.care.map((c, i) => (
+              <li key={i}>
+                <div className="cdc-care__ic">{CARE_ICONS[c.icon] || CARE_ICONS.fridge}</div>
+                <div className="cdc-care__tx"><strong>{c.title}</strong>{c.body}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Platos */}
+        <div className="cdc-d-sec">
+          <span className="cdc-d-sec__eye">Sugerencias culinarias</span>
+          <h3 className="cdc-d-sec__h">Qué puedes preparar</h3>
+          <div className="cdc-chips">
+            {p.dishes.map((d, i) => <span key={i} className="cdc-chip">{d}</span>)}
+          </div>
+        </div>
+
+        {/* Recetas */}
+        {productRecipes.length > 0 && (
+          <div className="cdc-d-sec">
+            <span className="cdc-d-sec__eye">Recetas</span>
+            <h3 className="cdc-d-sec__h">Aprende a prepararlo</h3>
+            <div className="cdc-d-recs">
+              {productRecipes.map(r => {
+                const chef = chefs[r.chef] || {};
+                return (
+                  <button key={r.id} className="cdc-d-rec" onClick={() => onOpenRecipe(r.id)}>
+                    <div className="cdc-d-rec__photo" style={r.photo ? {backgroundImage:`url('${r.photo}')`} : {}} />
+                    <div className="cdc-d-rec__body">
+                      <div className="cdc-d-rec__chef">{chef.name || r.chef}</div>
+                      <div className="cdc-d-rec__title">{r.title}</div>
+                      <div className="cdc-d-rec__meta">
+                        <span>{ICO_CLOCK} {r.time}</span>
+                        <span>{ICO_FIRE} {r.level}</span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Productos complementarios */}
+        {(() => {
+          const compIds = (window.PRODUCT_COMPLEMENTS || {})[p.id] || [];
+          const comps = compIds.map(cid => (window.COMPLEMENTS||[]).find(c=>c.id===cid)).filter(Boolean);
+          if (!comps.length) return null;
+          return (
+            <div className="cdc-d-sec">
+              <span className="cdc-d-sec__eye">También en Oregon Foods</span>
+              <h3 className="cdc-d-sec__h">Productos que combinan</h3>
+              <div className="cdc-d-comps">
+                {comps.map(c => {
+                  const clr = COMP_COLORS[c.cat] || "#154a2c";
+                  return (
+                    <div key={c.id} className="cdc-d-comp" style={{"--comp-clr": clr}}>
+                      <span className="cdc-d-comp__cat">{c.cat}</span>
+                      <div className="cdc-d-comp__name">{c.name}</div>
+                      <div className="cdc-d-comp__brand">{c.brand}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
+
+        <div className="cdc-d-spacer" />
+      </div>
+    </>
+  );
+}
+
+/* ============================================================
+   RecipeDrawer — receta completa con chef, ingredientes y pasos
+   ============================================================ */
+function RecipeDrawer({ recipeId, onClose }) {
+  const recipes = window.RECIPES;
+  const chefs   = window.CHEFS;
+  const r = recipes[recipeId];
+  if (!r) return null;
+  const chef = chefs[r.chef] || {};
+
+  return (
+    <>
+      <div className="cdc-overlay cdc-overlay--r" onClick={onClose} />
+      <div className="cdc-drawer cdc-drawer--r" role="dialog" aria-label={r.title}>
+        {/* Barra */}
+        <div className="cdc-drawer__bar">
+          <button className="cdc-drawer__back" onClick={onClose} aria-label="Volver">{ICO_BACK}</button>
+          <div className="cdc-drawer__bar-info">
+            <div className="l1">Receta</div>
+            <div className="l2">{r.level} · {r.time}</div>
+          </div>
+          <button className="cdc-drawer__x" onClick={onClose} aria-label="Cerrar">{ICO_X}</button>
+        </div>
+
+        {/* Hero foto */}
+        <div className="cdc-r-hero" style={r.photo ? {backgroundImage:`url('${r.photo}')`} : {}}>
+          <div className="cdc-r-hero__copy">
+            <span className="cdc-r-hero__eye">— Receta</span>
+            <h2 className="cdc-r-hero__title">{r.title}</h2>
+          </div>
+        </div>
+
+        {/* Chef */}
+        <div className="cdc-r-credit">
+          <div className="cdc-r-avatar">{chef.initials || "C"}</div>
+          <div className="cdc-r-info">
+            <span className="l1">Receta inspirada en</span>
+            <span className="nm">{chef.name || r.chef}</span>
+            <span className="rt">{chef.restaurant || ""}</span>
+          </div>
+        </div>
+
+        {/* Meta strip */}
+        <div className="cdc-r-strip">
+          <div><div className="l">Tiempo</div><div className="v">{r.time}</div></div>
+          <div><div className="l">Nivel</div><div className="v">{r.level}</div></div>
+          <div><div className="l">Porciones</div><div className="v">{r.serves}</div></div>
+          <div><div className="l">Punto</div><div className="v">{r.temp}</div></div>
+        </div>
+
+        {/* Intro */}
+        <p className="cdc-r-intro">{r.intro}</p>
+
+        {/* Ingredientes */}
+        <div className="cdc-d-sec cdc-r-ings">
+          <span className="cdc-d-sec__eye">Ingredientes</span>
+          <h3 className="cdc-d-sec__h">Lo que necesitas</h3>
+          <ul>
+            {r.ingredients.map((ing, i) => (
+              <li key={i}><span>{ing.item}</span><span className="qty">{ing.qty}</span></li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Pasos */}
+        <div className="cdc-d-sec cdc-r-steps">
+          <span className="cdc-d-sec__eye">Preparación</span>
+          <h3 className="cdc-d-sec__h">Paso a paso</h3>
+          <ol>
+            {r.steps.map((s, i) => (
+              <li key={i}>
+                <div className="sw">
+                  <div className="st">{s.t}</div>
+                  <div className="sb">{s.body}</div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Cita */}
+        <div className="cdc-r-quote">
+          <blockquote>{r.quote}</blockquote>
+          <div className="src">{r.quoteSrc}</div>
+        </div>
+
+        <div className="cdc-d-spacer" />
+      </div>
+    </>
+  );
+}
+
+/* ============================================================
+   App
+   ============================================================ */
+function App() {
+  const [activeTab,       setActiveTab]       = React.useState('inicio');
+  const [activeProductId, setActiveProductId] = React.useState(null);
+  const [activeRecipeId,  setActiveRecipeId]  = React.useState(null);
+  const [searchOpen,      setSearchOpen]      = React.useState(false);
+
+  /* Bloquear scroll del body cuando hay modal abierto */
+  React.useEffect(() => {
+    document.body.style.overflow = (activeProductId || searchOpen) ? 'hidden' : '';
+  }, [activeProductId, searchOpen]);
+
+  /* Cerrar con Escape */
+  React.useEffect(() => {
+    const handler = (e) => {
+      if (e.key !== 'Escape') return;
+      if (searchOpen) { setSearchOpen(false); return; }
+      if (activeRecipeId) setActiveRecipeId(null);
+      else if (activeProductId) setActiveProductId(null);
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [activeProductId, activeRecipeId, searchOpen]);
+
+  const handleOpenProduct = (id) => {
+    setActiveRecipeId(null);
+    setActiveProductId(id);
+  };
+
+  const handleCloseProduct = () => {
+    setActiveProductId(null);
+    setActiveRecipeId(null);
+  };
+
+  /* Scrollspy — actualiza la pestaña activa al hacer scroll */
+  React.useEffect(() => {
+    const SECTIONS = ['inicio', 'recetas', 'productos', 'tiendas'];
+    const NAV_H = 68;
+    const onScroll = () => {
+      let current = 'inicio';
+      for (const id of SECTIONS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= NAV_H + 50) current = id;
+      }
+      setActiveTab(current);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* Navegar a sección con scroll suave */
+  const handleTabChange = (tab) => {
+    const el = document.getElementById(tab);
+    if (el) {
+      const NAV_H = 64;
+      const y = el.getBoundingClientRect().top + window.scrollY - NAV_H;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const STORES = [
+    { district:"Barranco",   address:"Av. San Martín 240, Barranco, Lima",          hours:"Lun–Sáb 8am–8pm · Dom 9am–3pm" },
+    { district:"Miraflores", address:"Av. Benavides 1180, Miraflores, Lima",        hours:"Lun–Sáb 8am–8pm · Dom 9am–3pm" },
+    { district:"La Molina",  address:"Av. La Molina 1150, La Molina, Lima",         hours:"Lun–Sáb 8am–8pm · Dom 9am–3pm" },
+    { district:"San Borja",  address:"Av. Aviación 2828, San Borja, Lima",          hours:"Lun–Sáb 8am–8pm · Dom 9am–3pm" },
+    { district:"Surco",      address:"Av. Primavera 1642, Santiago de Surco, Lima", hours:"Lun–Sáb 8am–8pm · Dom 9am–3pm" },
+  ];
+
+  return (
+    <div className="cdc-app">
+      <Nav
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        onSearchOpen={() => setSearchOpen(true)}
+      />
+
+      {/* ——— Portada ——— */}
+      <div id="inicio">
+        <HeroOpener
+          eyebrow="— Excelencia desde el Origen"
+          headline="Disfruta al máximo cada corte"
+          subhead="Aquí encontrarás los mejores tips y recetas para preparar tus carnes Oregon Foods de la manera perfecta — desde la parrilla hasta la sartén."
+          bgImg="assets/hero-chef.png"
+        />
+      </div>
+
+      {/* ——— Recetas ——— */}
+      <section id="recetas" className="cdc-section">
+        <header className="cdc-section__head">
+          <span className="cdc-eyebrow">— Todas las recetas</span>
+          <h2>Recetas de nuestros chefs</h2>
+        </header>
+        <div className="cdc-recipe-grid">
+          {Object.values(window.RECIPES).map(r => (
+            <RecipeCard
+              key={r.id}
+              title={r.title}
+              category={r.level}
+              time={r.time}
+              level={r.level}
+              imgSrc={r.photo}
+              onClick={() => setActiveRecipeId(r.id)}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ——— Productos ——— */}
+      <ProductRail
+        title="Nuestros productos"
+        products={window.PRODUCTS}
+        onProductClick={handleOpenProduct}
+      />
+
+      {/* ——— Tiendas ——— */}
+      <section id="tiendas" className="cdc-section">
+        <header className="cdc-section__head">
+          <span className="cdc-eyebrow">— Encuéntranos</span>
+          <h2>Nuestras tiendas en Lima</h2>
+        </header>
+        <div className="cdc-stores-grid">
+          {STORES.map((s, i) => (
+            <a key={i} className="cdc-store-card"
+               href={`https://waze.com/ul?q=${encodeURIComponent(s.address)}&navigate=yes`}
+               target="_blank" rel="noopener noreferrer">
+              <div className="cdc-store-card__num">{String(i+1).padStart(2,'0')}</div>
+              <div className="cdc-store-card__body">
+                <h4 className="cdc-store-card__district">{s.district}</h4>
+                <p className="cdc-store-card__address">{s.address}</p>
+                <p className="cdc-store-card__hours">{s.hours}</p>
+              </div>
+              <svg className="cdc-store-card__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <Footer />
+
+      {/* ——— Drawers ——— */}
+      {activeProductId && (
+        <ProductDrawer
+          productId={activeProductId}
+          onClose={handleCloseProduct}
+          onOpenRecipe={setActiveRecipeId}
+          onOpenProduct={handleOpenProduct}
+        />
+      )}
+
+      {activeRecipeId && (
+        <RecipeDrawer
+          recipeId={activeRecipeId}
+          onClose={() => setActiveRecipeId(null)}
+        />
+      )}
+
+      {searchOpen && (
+        <SearchPanel
+          onClose={() => setSearchOpen(false)}
+          onSelectProduct={(id) => { setActiveTab('productos'); setActiveProductId(id); setSearchOpen(false); }}
+        />
+      )}
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('app'));
+root.render(<App />);
+</script>
+</body>
+</html>
